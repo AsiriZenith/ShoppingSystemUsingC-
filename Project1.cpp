@@ -8,32 +8,16 @@ public:
     string password;
     // User objArray1[10];
 public:
-    bool Login(User objectArray[], int NumberOfCustomers)
+    bool login(string un, string pwd)
     {
-        cout << "Enter Your Username: ";
-        cin >> username;
-        if (username == objectArray[0].username)
+        if ((un.compare(username) == 0) && (pwd.compare(password) == 0))
         {
-            cout << "Enter Your Password: ";
-            cin >> password;
-            if (password == objectArray[0].password)
-            {
-                cout << "***********" << endl;
-                cout << objectArray[0].password << endl;
-                return true;
-            }
-            else
-            {
-                cout << "Passowrd Is Incorrect. Try Again.!!"<<endl;
-                return false;
-            }
+            return true;
         }
         else
         {
-            cout << "There is no such user. Please Try Again.!!" << endl;
             return false;
         }
-        return 0;
     }
 };
 
@@ -41,21 +25,9 @@ class Administrator : public User
 {
 public:
     string adminName;
-    //string password;
+    string pasword;
 
 public:
-    // void setAdminName(string a)
-    // {
-    //     adminName = a;
-    // }
-    // string getAdminName()
-    // {
-    //     return adminName;
-    // }
-    // void setPassword(string p)
-    // {
-    //     password = p;
-    // }
 };
 
 class Customer : public User
@@ -146,6 +118,49 @@ public:
     }
 };
 
+class Order
+{
+private:
+    int orderId;
+    string date;
+    string customerName;
+    string customerId;
+    bool status;
+    bool orderStatus;
+
+public:
+    bool checkStatus()
+    {
+        if (status == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    void confirmOrder()
+    {
+        orderStatus = true;
+    }
+    void cancelOrder()
+    {
+        orderStatus = false;
+    }
+};
+
+// bool login()
+// {
+//     string username, password;
+//     cout << "Enter Your Username: ";
+//     cin >> username;
+//     cout << "Enter Your Password: ";
+//     cin >> password;
+
+//     return admin.login(username, password);
+// }
+
 int main()
 {
     Customer objArray1[10];
@@ -156,6 +171,7 @@ int main()
     admin.username = "admin";
     Administrator admin1[1];
     int NumberOfCustomers = 0;
+    string username, password;
     int n;
     cout << "1.Customer\t2.Administrator" << endl;
     cout << "Select Your Role: ";
@@ -174,8 +190,6 @@ int main()
             }
             else if (n == 2)
             {
-                objArray1[NumberOfCustomers].Register();
-                NumberOfCustomers++;
             }
             else if (n == 3)
             {
@@ -196,14 +210,25 @@ int main()
             cin >> n;
             if (n == 1)
             {
-                admin1[0] = admin;
-                if (user.Login(admin1, 1))
+                cout << "Enter Your Username: ";
+                cin >> username;
+                cout << "Enter Your Password: ";
+                cin >> password;
+
+                if (admin.login(username, password))
                 {
-                    cout << "$$$$$$$$$$$$$$" << endl;
+                    cout << "1.Add Customer\t2.Remove Customer" << endl;
+                    cout << "Enter Your Option: ";
+                    cin >> n;
+                    if (n == 1)
+                    {
+                        objArray1[NumberOfCustomers].Register();
+                        NumberOfCustomers++;
+                    }
                 }
                 else
                 {
-                    cout << "Not Login!!" << endl;
+                    cout << "Your Enterd is wrong!! Please Try Again.!!" << endl;
                 }
             }
             else if (n == 2)
