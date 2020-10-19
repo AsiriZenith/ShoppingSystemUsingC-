@@ -8,55 +8,60 @@ public:
     string password;
     // User objArray1[10];
 public:
-    // User(User s[], int size)
-    // {
-    //     //objArray1[10]=s[size];
-    //     cout << s[0].username;
-    // }
-    // void setUserName(string u)
-    // {
-    //     username = u;
-    // }
-    // string getUserName()
-    // {
-    //     return username;
-    // }
-    // string getPassword()
-    // {
-    //     return password;
-    // }
-    void Login(User objectArray[])
+    bool Login(User objectArray[], int NumberOfCustomers)
     {
-        // cout << "Enter Username: ";
-        // cin >> username;
-        cout << objectArray[0].username << endl;
+        cout << "Enter Your Username: ";
+        cin >> username;
+        if (username == objectArray[0].username)
+        {
+            cout << "Enter Your Password: ";
+            cin >> password;
+            if (password == objectArray[0].password)
+            {
+                cout << "***********" << endl;
+                cout << objectArray[0].password << endl;
+                return true;
+            }
+            else
+            {
+                cout << "Passowrd Is Incorrect. Try Again.!!"<<endl;
+                return false;
+            }
+        }
+        else
+        {
+            cout << "There is no such user. Please Try Again.!!" << endl;
+            return false;
+        }
+        return 0;
     }
 };
 
 class Administrator : public User
 {
-private:
+public:
     string adminName;
-    string password;
+    //string password;
 
 public:
-    void setAdminName(string a)
-    {
-        adminName = a;
-    }
-    string getAdminName()
-    {
-        return adminName;
-    }
-    void setPassword(string p)
-    {
-        password = p;
-    }
+    // void setAdminName(string a)
+    // {
+    //     adminName = a;
+    // }
+    // string getAdminName()
+    // {
+    //     return adminName;
+    // }
+    // void setPassword(string p)
+    // {
+    //     password = p;
+    // }
 };
 
 class Customer : public User
 {
 private:
+    //int customerId;
     string customerName;
     string address;
     string email;
@@ -82,7 +87,6 @@ public:
     {
         return address;
     }
-
     void setEmail(string e)
     {
         email = e;
@@ -144,57 +148,76 @@ public:
 
 int main()
 {
-    Customer objArray[10];
+    Customer objArray1[10];
     User user;
+    Administrator admin;
+    admin.adminName = "admin";
+    admin.password = "admin@123";
+    admin.username = "admin";
+    Administrator admin1[1];
     int NumberOfCustomers = 0;
     int n;
-    cout << "Select Your Role:" << endl;
     cout << "1.Customer\t2.Administrator" << endl;
+    cout << "Select Your Role: ";
     cin >> n;
     if (n == 1)
     {
         do
         {
-            cout << "1.Login\t  2.Register\t3.Exit" << endl;
-            cout << "Select Your Option: " << endl;
+            cout << "1.Login\t  2.Register\t3.LogOut" << endl;
+            cout << "Select Your Option: ";
             cin >> n;
 
             if (n == 1)
             {
-                user.Login(objArray);
+                //user.Login(objArray1, NumberOfCustomers);
             }
             else if (n == 2)
             {
-                objArray[NumberOfCustomers].Register();
+                objArray1[NumberOfCustomers].Register();
                 NumberOfCustomers++;
             }
             else if (n == 3)
             {
                 break;
             }
-
             else
             {
                 cout << "Your Entered is Inavalid!! Try Again.." << endl;
             }
         } while (1);
-
-        int _NumberOfCustomers = NumberOfCustomers;
-        while (_NumberOfCustomers >= 0)
-        {
-            cout << objArray[_NumberOfCustomers].getCustomerName();
-            cout << endl;
-            cout << objArray[_NumberOfCustomers].getAddress();
-            cout << endl;
-            cout << objArray[_NumberOfCustomers].getContactNo();
-            cout << endl;
-            cout << objArray[_NumberOfCustomers].getEmail();
-            cout << endl;
-            cout << objArray[_NumberOfCustomers].getGender();
-            cout << endl;
-            _NumberOfCustomers--;
-        }
     }
+    else if (n == 2)
+    {
+        do
+        {
+            cout << "1.Login\t  2.LogOut" << endl;
+            cout << "Select Your Option: ";
+            cin >> n;
+            if (n == 1)
+            {
+                admin1[0] = admin;
+                if (user.Login(admin1, 1))
+                {
+                    cout << "$$$$$$$$$$$$$$" << endl;
+                }
+                else
+                {
+                    cout << "Not Login!!" << endl;
+                }
+            }
+            else if (n == 2)
+            {
+                break;
+            }
+            else
+            {
+                cout << "Your Entered is Invalid.!!" << endl;
+            }
+
+        } while (1);
+    }
+
     else
     {
         /* code */
