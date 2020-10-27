@@ -3,11 +3,23 @@ using namespace std;
 
 class User
 {
-public:
+private:
     string username;
     string password;
 
 public:
+    void setuserName(string u)
+    {
+        username = u;
+    }
+    string getuserName()
+    {
+        return username;
+    }
+    void setPassword(string s)
+    {
+        password = s;
+    }
     bool login(string un, string pwd)
     {
         if ((un.compare(username) == 0) && (pwd.compare(password) == 0))
@@ -30,6 +42,10 @@ private:
     string email;
     string contactNo;
     string gender;
+    string _contactNo;
+    string _password1;
+    string _password2;
+    string _userName;
     // int paymentDetails;
     // string orderDeatils;
 
@@ -100,29 +116,117 @@ public:
         cout << "\nEnter Name: ";
         cin >> customerName;
         cout << "Enter UserName: ";
-        cin >> username;
+        cin >> _userName;
+        setuserName(_userName);
         cout << "Enter Password: ";
-        cin >> password;
+        cin >> _password1;
+        setPassword(_password1);
         cout << "Enter Addaress: ";
         cin >> address;
         cout << "Enter Email: ";
         cin >> email;
         cout << "Enter Contact Number: ";
-        cin >> contactNo;
+        cin >> _contactNo;
+        if (_contactNo.length() == 10)
+        {
+            contactNo = _contactNo;
+            _contactNo = 0;
+        }
+        else
+        {
+            contactNo = "";
+            cout << "Entered Contact Number is Not Valid!!" << endl;
+        }
         cout << "Enter Gender: ";
         cin >> gender;
     }
-    void updateProfile(int indexOfCustomer)
+    void updateProfile()
     {
+        int n;
         cout << "\n*******************************************" << endl;
         cout << "Current customer details" << endl;
 
-        cout << "\nCustomer Name: ";
-        cout << objArray[indexOfCurrentCustomer].getCustomerName() << endl;
-        cout << "Customer UserName: ";
-        cout << objArray[indexOfCurrentCustomer].username << endl;
-        cout << "Customer Address: ";
-        cout << objArray[indexOfCurrentCustomer].getAddress() << endl;
+        cout << "\n1.Customer Name: ";
+        cout << getCustomerName() << endl;
+        cout << "2.Customer UserName: ";
+        cout << getuserName() << endl;
+        cout << "3.Customer Address: ";
+        cout << getAddress() << endl;
+        cout << "4.Customer Email: ";
+        cout << getEmail() << endl;
+        cout << "5.Customer Contact Number: ";
+        cout << getContactNo() << endl;
+        cout << "6.Customer Gender: ";
+        cout << getGender() << endl;
+        cout << "7.Password: ";
+        cout << "********" << endl;
+
+        cout << "Enter the Number Do you want to change: ";
+        cin >> n;
+
+        if (n == 1)
+        {
+            cout << "Enter the New Name: ";
+            cin >> customerName;
+        }
+        else if (n == 2)
+        {
+            cout << "Enter the New UserName: ";
+            cin >> _userName;
+            setuserName(_userName);
+        }
+        else if (n == 3)
+        {
+            cout << "Enter the New Address: ";
+            cin >> address;
+        }
+        else if (n == 4)
+        {
+            cout << "Enter the new Email: ";
+            cin >> email;
+        }
+        else if (n == 5)
+        {
+            cout << "Enter the new Contact Number: ";
+            cin >> _contactNo;
+            if (_contactNo.length() == 10)
+            {
+                contactNo = _contactNo;
+                _contactNo = "";
+            }
+            else
+            {
+                contactNo = "";
+                cout << "Entered Contact Number is Not Valid!!" << endl;
+            }
+        }
+        else if (n == 6)
+        {
+            cout << "Enter gender: ";
+            cin >> gender;
+        }
+        else if (n == 7)
+        {
+            cout << "Enter the new password: ";
+            cin >> _password1;
+            cout << "Enter the password again: ";
+            cin >> _password2;
+            if (_password1 == _password2)
+            {
+                setPassword(_password1);
+                cout << "Password Change Updated!!" << endl;
+                _password1 = "";
+                _password2 = "";
+            }
+            else
+            {
+                cout << "Your entered is Not Match. Try Again!!" << endl;
+            }
+        }
+        else
+        {
+            cout << "Your Entered is Invalid!!" << endl;
+        }
     }
 };
 
@@ -226,8 +330,8 @@ int main()
     User user;
     Administrator admin;
     admin.adminName = "admin";
-    admin.password = "admin@123";
-    admin.username = "admin";
+    admin.setuserName("admin");
+    admin.setPassword("admin@123");
     Administrator admin1[1];
     int NumberOfCustomers = 0;
     string username, password;
@@ -260,7 +364,7 @@ int main()
                 }
                 else if (i == NumberOfCustomers - 1)
                 {
-                    cout << "\nNothing Such User" << endl;
+                    cout << "\nYour Entered is Invalid!!" << endl;
                     IsLogged = false;
                 }
             }
@@ -268,21 +372,12 @@ int main()
             {
                 do
                 {
-                    cout << "\n1.Edit Customer Details\t2.LogOut" << endl;
+                    cout << "\n1.Edit Customer Details\t  2.LogOut" << endl;
                     cout << "Enter Your choice: ";
                     cin >> n;
                     if (n == 1)
                     {
-                        objArray[indexOfCurrentCustomer].updateProfile(indexOfCurrentCustomer);
-                        // cout << "\n*******************************************" << endl;
-                        // cout << "Current customer details" << endl;
-
-                        // cout << "\nCustomer Name: ";
-                        // cout << objArray[indexOfCurrentCustomer].getCustomerName() << endl;
-                        // cout << "Customer UserName: ";
-                        // cout << objArray[indexOfCurrentCustomer].username << endl;
-                        // cout << "Customer Address: ";
-                        // cout << objArray[indexOfCurrentCustomer].getAddress() << endl;
+                        objArray[indexOfCurrentCustomer].updateProfile();
                     }
                     else if (n == 2)
                     {
