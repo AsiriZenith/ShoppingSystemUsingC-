@@ -97,7 +97,7 @@ public:
     void Register(int id)
     {
         customerId = id;
-        cout << "Enter Name: ";
+        cout << "\nEnter Name: ";
         cin >> customerName;
         cout << "Enter UserName: ";
         cin >> username;
@@ -112,7 +112,21 @@ public:
         cout << "Enter Gender: ";
         cin >> gender;
     }
+    void updateProfile(int indexOfCustomer)
+    {
+        cout << "\n*******************************************" << endl;
+        cout << "Current customer details" << endl;
+
+        cout << "\nCustomer Name: ";
+        cout << objArray[indexOfCurrentCustomer].getCustomerName() << endl;
+        cout << "Customer UserName: ";
+        cout << objArray[indexOfCurrentCustomer].username << endl;
+        cout << "Customer Address: ";
+        cout << objArray[indexOfCurrentCustomer].getAddress() << endl;
+    }
 };
+
+//Created Customer Object Array as globally
 Customer objArray[10];
 
 class Administrator : public User
@@ -125,22 +139,56 @@ public:
     int AddCustomer(int NumberOfCustomers)
     {
         objArray[NumberOfCustomers].Register(NumberOfCustomers + 1);
-        //NumberOfCustomers++;
         return ++NumberOfCustomers;
     }
     void RemoveCustomer(int NumberOfCustomers)
     {
-        int n;
+        int n, indexOf_n;
         cout << "************************************************" << endl;
+        cout << "NumberOfCustomers: " << NumberOfCustomers << endl;
         cout << "\n Customer ID\tCustomer Name" << endl;
         for (int i = 0; i < NumberOfCustomers; i++)
         {
             cout << "\t" << objArray[i].getCustomerId() << "\t    " << objArray[i].getCustomerName() << endl;
         }
-        cout << "Enter the CustomerId which you want to Remove: ";
-        cin >> n;
+
+        if (NumberOfCustomers == 0)
+        {
+            cout << "Nothing Customers in the list!!" << endl;
+        }
+        else if (NumberOfCustomers > 0)
+        {
+            cout << "Enter the CustomerId which you want to Remove: ";
+            cin >> n;
+
+            for (int i = 0; i < NumberOfCustomers; i++)
+            {
+                if (objArray[i].getCustomerId() == n)
+                {
+                    indexOf_n = i;
+                    break;
+                }
+                else if (objArray[i].getCustomerId() != n && i + 1 == NumberOfCustomers)
+                {
+                    cout << "Nothing Such Customers here!!" << endl;
+                    indexOf_n = -1;
+                }
+            }
+            if (indexOf_n != -1)
+            {
+                for (int i = indexOf_n; i < NumberOfCustomers; i++)
+                {
+                    objArray[i] = objArray[i + 1];
+                }
+            }
+        }
+        else
+        {
+            cout << "\nErorr!!" << endl;
+        }
     }
 };
+
 class Order
 {
 private:
@@ -173,30 +221,6 @@ public:
     }
 };
 
-// bool login()
-// {
-//     string username, password;
-//     cout << "Enter Your Username: ";
-//     cin >> username;
-//     cout << "Enter Your Password: ";
-//     cin >> password;
-
-//     return admin.login(username, password);
-// }
-
-// void RemoveCustomer(int NumberOfCustomers)
-// {
-//     int n;
-//     cout << "************************************************" << endl;
-//     cout << "\n Customer ID\tCustomer Name" << endl;
-//     for (int i = 0; i < NumberOfCustomers; i++)
-//     {
-//         cout << "\t" << objArray[i].getCustomerId() << "\t    " << objArray[i].getCustomerName() << endl;
-//     }
-//     cout << "Enter the CustomerId which you want to Remove: ";
-//     cin >> n;
-// }
-
 int main()
 {
     User user;
@@ -208,39 +232,75 @@ int main()
     int NumberOfCustomers = 0;
     string username, password;
     int n;
+    bool IsLogged;
+    int indexOfCurrentCustomer = 0;
     do
     {
         cout << "\n1.Customer\t2.Administrator\t    3.Exit" << endl;
         cout << "Select Your Choice: ";
         cin >> n;
-        if (n == 1)
-        {
-            do
-            {
-                cout << "1.Login\t2.LogOut" << endl;
-                cout << "Select Your Option: ";
-                cin >> n;
-
-                if (n == 1)
-                {
-                    //user.Login(objArray, NumberOfCustomers);
-                }
-                else if (n == 2)
-                {
-                    break;
-                }
-                else
-                {
-                    cout << "Your Entered is Inavalid!! Try Again.." << endl;
-                }
-            } while (1);
-        }
-        else if (n == 2)
+        if (n != 3)
         {
             cout << "\nEnter Your Username: ";
             cin >> username;
             cout << "Enter Your Password: ";
             cin >> password;
+        }
+
+        if (n == 1)
+        {
+            for (int i = 0; i < NumberOfCustomers; i++)
+            {
+                if (objArray[i].login(username, password))
+                {
+                    cout << "\nYour Login Succussful!!" << endl;
+                    IsLogged = true;
+                    indexOfCurrentCustomer = i;
+                    break;
+                }
+                else if (i == NumberOfCustomers - 1)
+                {
+                    cout << "\nNothing Such User" << endl;
+                    IsLogged = false;
+                }
+            }
+            if (IsLogged)
+            {
+                do
+                {
+                    cout << "\n1.Edit Customer Details\t2.LogOut" << endl;
+                    cout << "Enter Your choice: ";
+                    cin >> n;
+                    if (n == 1)
+                    {
+                        objArray[indexOfCurrentCustomer].updateProfile(indexOfCurrentCustomer);
+                        // cout << "\n*******************************************" << endl;
+                        // cout << "Current customer details" << endl;
+
+                        // cout << "\nCustomer Name: ";
+                        // cout << objArray[indexOfCurrentCustomer].getCustomerName() << endl;
+                        // cout << "Customer UserName: ";
+                        // cout << objArray[indexOfCurrentCustomer].username << endl;
+                        // cout << "Customer Address: ";
+                        // cout << objArray[indexOfCurrentCustomer].getAddress() << endl;
+                    }
+                    else if (n == 2)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        cout << "\nYour Enterd is Invalid!!" << endl;
+                    }
+                } while (1);
+            }
+        }
+        else if (n == 2)
+        {
+            // cout << "\nEnter Your Username: ";
+            // cin >> username;
+            // cout << "Enter Your Password: ";
+            // cin >> password;
 
             if (admin.login(username, password))
             {
@@ -252,8 +312,6 @@ int main()
                     if (n == 1)
                     {
                         NumberOfCustomers = admin.AddCustomer(NumberOfCustomers);
-                        cout << "**********************************" << endl;
-                        cout << NumberOfCustomers << endl;
                     }
                     else if (n == 2)
                     {
@@ -283,7 +341,7 @@ int main()
 
         else
         {
-            cout << "Your Entered is Incorrect.!!" << endl;
+            cout << "\nYour Entered is Incorrect.!!" << endl;
         }
     } while (1);
 }
