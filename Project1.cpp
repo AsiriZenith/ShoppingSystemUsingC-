@@ -11,7 +11,7 @@ public:
     void setuserName(string u)
     {
         username = u;
-    }
+    } 
     string getuserName()
     {
         return username;
@@ -130,7 +130,7 @@ public:
         if (_contactNo.length() == 10)
         {
             contactNo = _contactNo;
-            _contactNo = 0;
+            _contactNo = "";
         }
         else
         {
@@ -146,7 +146,9 @@ public:
         cout << "\n*******************************************" << endl;
         cout << "Current customer details" << endl;
 
-        cout << "\n1.Customer Name: ";
+        cout << "\nCustomer ID: ";
+        cout << getCustomerId() << endl;
+        cout << "1.Customer Name: ";
         cout << getCustomerName() << endl;
         cout << "2.Customer UserName: ";
         cout << getuserName() << endl;
@@ -231,7 +233,7 @@ public:
 };
 
 //Created Customer Object Array as globally
-Customer objArray[10];
+Customer objArray[1000000000000000];
 
 class Administrator : public User
 {
@@ -293,6 +295,74 @@ public:
     }
 };
 
+class Item
+{
+private:
+    int productID;
+    string productName;
+    string description;
+    int price;
+    int discount;
+
+public:
+    int getProductID()
+    {
+        return productID;
+    }
+    string getProductName()
+    {
+        return productName;
+    }
+    string getProductDscription()
+    {
+        return description;
+    }
+    int getProductPrice()
+    {
+        return price;
+    }
+    int getProductDiscount()
+    {
+        return discount;
+    }
+    void addItem(int numberOfItem)
+    {
+        int n;
+        productID = numberOfItem;
+        cout << "\nEnter Product Name: ";
+        cin >> productName;
+        cout << "Enter Description: ";
+        cin >> description;
+        cout << "Enter the Price: ";
+        cin >> price;
+        cout << "Have a Discount this product: " << endl;
+        cout << "1.Yes\t2.No" << endl;
+        cout << "Enter the Number: ";
+        cin >> n;
+        if (n == 1)
+        {
+            cout << "Enter the Discount: ";
+            cin >> discount;
+        }
+        else if (n == 2)
+        {
+            discount = 0;
+        }
+
+        {
+            cout << "Your Entered is Invalid!!" << endl;
+        }
+        cout << "\nItem Added Succussful!!" << endl;
+    }
+    void updateItem()
+    {
+        int n;
+    }
+};
+
+//Created Item Object Array as globally
+Item itemArray[20];
+
 class Order
 {
 private:
@@ -325,6 +395,23 @@ public:
     }
 };
 
+int selectIndexOfItem(int numberOfItem)
+{
+    int indexOfselectItem;
+    cout << "\n************************************************" << endl;
+    cout << "NumberOfItems: " << numberOfItem << endl;
+    cout << "\n Item ID\t Item Name" << endl;
+
+    for (int i = 0; i < numberOfItem; i++)
+    {
+        cout << "\t" << itemArray[i].getProductID() << "\t    " << itemArray[i].getProductName() << endl;
+    }
+
+    cout << "Enter the ProductID do you want to update: ";
+    cin >> indexOfselectItem;
+    return indexOfselectItem;
+}
+
 int main()
 {
     User user;
@@ -338,6 +425,9 @@ int main()
     int n;
     bool IsLogged;
     int indexOfCurrentCustomer = 0;
+    int indexOfItem = 0;
+    int numberOfItem = 0;
+    int indexOfselectItem;
     do
     {
         cout << "\n1.Customer\t2.Administrator\t    3.Exit" << endl;
@@ -392,16 +482,11 @@ int main()
         }
         else if (n == 2)
         {
-            // cout << "\nEnter Your Username: ";
-            // cin >> username;
-            // cout << "Enter Your Password: ";
-            // cin >> password;
-
             if (admin.login(username, password))
             {
                 do
                 {
-                    cout << "\n1.Add Customer\t  2.Remove Customer\t3.LogOut" << endl;
+                    cout << "\n1.Add Customer\t  2.Remove Customer\t3.Add Item  \t4.LogOut" << endl;
                     cout << "Enter Your Option: ";
                     cin >> n;
                     if (n == 1)
@@ -415,8 +500,44 @@ int main()
                     }
                     else if (n == 3)
                     {
+                        do
+                        {
+                            cout << "\n1.Add Item\t2.Update Item\t3.View Item\t4.Exit" << endl;
+                            cout << "Enter your option: ";
+                            cin >> n;
+                            if (n == 1)
+                            {
+                                itemArray[indexOfItem].addItem(indexOfItem + 1);
+                                indexOfItem++;
+                                numberOfItem = indexOfItem;
+                            }
+                            else if (n == 2)
+                            {
+                                if (numberOfItem == 0)
+                                {
+                                    cout << "\nNothing any item yet" << endl;
+                                }
+                                else
+                                {
+                                    indexOfselectItem = selectIndexOfItem(numberOfItem);
+                                }
+                            }
+                            else if (n == 3)
+                            {
+                                /* code */
+                            }
+                            else if (n == 4)
+                            {
+                                break;
+                            }
+
+                        } while (1);
+                    }
+                    else if (n == 4)
+                    {
                         break;
                     }
+
                     else
                     {
                         cout << "Your Entered is Incorrect.!!" << endl;
