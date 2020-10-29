@@ -11,7 +11,7 @@ public:
     void setuserName(string u)
     {
         username = u;
-    } 
+    }
     string getuserName()
     {
         return username;
@@ -163,77 +163,88 @@ public:
         cout << "7.Password: ";
         cout << "********" << endl;
 
-        cout << "Enter the Number Do you want to change: ";
+        cout << "\nEnter the Number Do you want to change: ";
         cin >> n;
 
         if (n == 1)
         {
-            cout << "Enter the New Name: ";
+            cout << "\nEnter the New Name: ";
             cin >> customerName;
+            n == 11;
         }
         else if (n == 2)
         {
-            cout << "Enter the New UserName: ";
+            cout << "\nEnter the New UserName: ";
             cin >> _userName;
             setuserName(_userName);
+            n == 12;
         }
         else if (n == 3)
         {
-            cout << "Enter the New Address: ";
+            cout << "\nEnter the New Address: ";
             cin >> address;
+            n == 13;
         }
         else if (n == 4)
         {
-            cout << "Enter the new Email: ";
+            cout << "\nEnter the new Email: ";
             cin >> email;
+            n == 14;
         }
         else if (n == 5)
         {
-            cout << "Enter the new Contact Number: ";
+            cout << "\nEnter the new Contact Number: ";
             cin >> _contactNo;
             if (_contactNo.length() == 10)
             {
                 contactNo = _contactNo;
                 _contactNo = "";
+                n = 15;
             }
             else
             {
                 contactNo = "";
-                cout << "Entered Contact Number is Not Valid!!" << endl;
+                cout << "\nEntered Contact Number is Not Valid!!" << endl;
             }
         }
         else if (n == 6)
         {
-            cout << "Enter gender: ";
+            cout << "\nEnter gender: ";
             cin >> gender;
+            n = 16;
         }
         else if (n == 7)
         {
-            cout << "Enter the new password: ";
+            cout << "\nEnter the new password: ";
             cin >> _password1;
             cout << "Enter the password again: ";
             cin >> _password2;
             if (_password1 == _password2)
             {
                 setPassword(_password1);
-                cout << "Password Change Updated!!" << endl;
+                cout << "\nPassword Change Updated!!" << endl;
                 _password1 = "";
                 _password2 = "";
             }
             else
             {
-                cout << "Your entered is Not Match. Try Again!!" << endl;
+                cout << "\nYour entered is Not Match. Try Again!!" << endl;
             }
         }
         else
         {
             cout << "Your Entered is Invalid!!" << endl;
+            n = 20;
+        }
+        if (n > 10)
+        {
+            cout << "\nYour Update is Successfull!!" << endl;
         }
     }
 };
 
 //Created Customer Object Array as globally
-Customer objArray[1000000000000000];
+Customer objArray[10];
 
 class Administrator : public User
 {
@@ -247,7 +258,7 @@ public:
         objArray[NumberOfCustomers].Register(NumberOfCustomers + 1);
         return ++NumberOfCustomers;
     }
-    void RemoveCustomer(int NumberOfCustomers)
+    void RemoveCustomer(int NumberOfCustomers) //this method not work correctly
     {
         int n, indexOf_n;
         cout << "************************************************" << endl;
@@ -357,6 +368,54 @@ public:
     void updateItem()
     {
         int n;
+        cout << "\n********************************************" << endl;
+        cout << "Select Item Details" << endl;
+        cout << "\nItem ID: " << productID << endl;
+        cout << "1.Item Name: " << productName << endl;
+        cout << "2.Item description: " << description << endl;
+        cout << "3.Item Price: " << price << endl;
+        cout << "4.Item  discount: ";
+        if (discount == 0)
+        {
+            cout << "Not discount!!" << endl;
+        }
+        else
+        {
+            cout << discount << endl;
+        }
+
+        cout << "\nEnter the Number Do you want to change: ";
+        cin >> n;
+
+        if (n == 1)
+        {
+            cout << "\nEnter the new Item name: ";
+            cin >> productName;
+        }
+        else if (n == 2)
+        {
+            cout << "\nEnter the new description: ";
+            cin >> description;
+        }
+        else if (n == 3)
+        {
+            cout << "\nEnter the new Price: ";
+            cin >> price;
+        }
+        else if (n == 4)
+        {
+            cout << "\nEnter the new discountL: ";
+            cin >> discount;
+        }
+        else
+        {
+            cout << "\nYour Entered is Invalid!!" << endl;
+            n = 5;
+        }
+        if (n != 5)
+        {
+            cout << "\nYour Update is Successfull!!" << endl;
+        }
     }
 };
 
@@ -484,6 +543,7 @@ int main()
         {
             if (admin.login(username, password))
             {
+                cout << "\nYour Login Succussfull!!" << endl;
                 do
                 {
                     cout << "\n1.Add Customer\t  2.Remove Customer\t3.Add Item  \t4.LogOut" << endl;
@@ -520,6 +580,7 @@ int main()
                                 else
                                 {
                                     indexOfselectItem = selectIndexOfItem(numberOfItem);
+                                    itemArray[indexOfselectItem].updateItem();
                                 }
                             }
                             else if (n == 3)
@@ -537,12 +598,10 @@ int main()
                     {
                         break;
                     }
-
                     else
                     {
                         cout << "Your Entered is Incorrect.!!" << endl;
                     }
-
                 } while (1);
             }
             else
@@ -554,7 +613,6 @@ int main()
         {
             break;
         }
-
         else
         {
             cout << "\nYour Entered is Incorrect.!!" << endl;
