@@ -524,6 +524,7 @@ int main()
                     cout << "\n1.Edit Customer Details\t  2.LogOut" << endl;
                     cout << "Enter Your choice: ";
                     cin >> n;
+
                     if (n == 1)
                     {
                         objArray[indexOfCurrentCustomer].updateProfile();
@@ -536,6 +537,7 @@ int main()
                     {
                         cout << "\nYour Enterd is Invalid!!" << endl;
                     }
+                    
                 } while (1);
             }
         }
@@ -619,3 +621,4 @@ int main()
         }
     } while (1);
 }
+
