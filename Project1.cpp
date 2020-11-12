@@ -504,12 +504,35 @@ public:
     }
     void addCard(int numberOfItem)
     {
-        cout << "\n************************************************" << endl;
-        cout << "\n\tProduct ID\t Product Name" << endl;
-        for (int i = 0; i < numberOfItem; i++)
+        price = 0;
+
+        do
         {
-            cout << itemArray[i].getProductID() << "\t" << itemArray[i].getProductName() << endl;
-        }
+            cout << "\n**************************************************************" << endl;
+            cout << "\n\t  Product ID\t\tProduct Name" << endl;
+            for (int i = 0; i < numberOfItem; i++)
+            {
+                cout << "\t\t" << itemArray[i].getProductID() << "\t\t  " << itemArray[i].getProductName() << endl;
+            }
+            cout << "\n**************************************************************" << endl;
+
+            cout<< "\nEnter the item number that you want: ";
+            cin >> n;
+
+            cout << "\nYou enter item is: " << itemArray[n - 1].getProductName() << endl;
+
+            cout << "\nEnter the Item amount: ";
+            cin >> quantity;
+
+            price = price + quantity * itemArray[n - 1].getProductPrice();
+
+            cout << "\nPrice: " << quantity * itemArray[n - 1].getProductPrice() << "/=" << endl;
+            cout << "\nIf you want to continue, press any number otherwise you want to exit press '0' : ";
+            cin >> n;
+
+        } while (n != 0);
+
+        cout << "\nTotal Price: " << price << "/=" << endl;
     }
 };
 
@@ -612,7 +635,7 @@ int main()
                 cout << "\nYour Login Succussfull!!" << endl;
                 do
                 {
-                    cout << "\n1.Add Customer\t  2.Remove Customer\t3.Item \t4.LogOut\t5.AddCart" << endl;
+                    cout << "\n1.Add Customer\t  2.Remove Customer\t3.Item \t  4.LogOut\t5.AddCart" << endl;
                     cout << "Enter Your Option: ";
                     cin >> n;
                     if (n == 1)
@@ -628,7 +651,7 @@ int main()
                     {
                         do
                         {
-                            cout << "\n1.Add Item\t2.Update Item\t3.View Item\t4.Exit" << endl;
+                            cout << "\n1.Add Item\t2.Update Item\t  3.View Item\t4.Exit" << endl;
                             cout << "Enter your option: ";
                             cin >> n;
                             if (n == 1)
