@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -245,7 +246,7 @@ public:
 };
 
 //Created Customer Object Array as globally
-Customer objArray[10];
+Customer objArray[20];
 
 class Administrator : public User
 {
@@ -444,7 +445,7 @@ public:
         cout << "5.Item  discount: ";
         if (discount == 0)
         {
-            cout << "Not discount!!" << endl;
+            cout << "\nNot discount!!" << endl;
         }
         else
         {
@@ -460,13 +461,22 @@ class Order
 {
 private:
     int orderId;
+    int shoppingCartId;
     string date;
-    string customerName;
-    string customerId;
+    //string customerName;    *customerId included shopping cart. shopping cart id is existing here.
+    //string customerId;        therefore we can findout customer details throught that path.
     bool status;
-    bool orderStatus;
+    //bool orderStatus;
 
 public:
+    Order() {}          //Declared Order type object array below this class. 
+        //default constructor should be include so that create the below object array 
+    Order(int _shoppingCartId)
+    {
+        shoppingCartId = _shoppingCartId;
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+    }
     bool checkStatus()
     {
         if (status == true)
@@ -480,32 +490,35 @@ public:
     }
     void confirmOrder()
     {
-        orderStatus = true;
+        status = true;
     }
     void cancelOrder()
     {
-        orderStatus = false;
+        status = false;
     }
 };
+
+Order orderArray[20];
 
 class ShoppingCart
 {
 private:
     int cartId;
+    int customerId;
     int productId;
     int quantity;
     int price;
-    int customerId;
 
 public:
-    ShoppingCart(int cid)
+    ShoppingCart(int _customerId, int _cartId)
     {
-        customerId = cid;
+        customerId = _customerId;
+        cartId = _cartId;
     }
     void addCard(int numberOfItem)
     {
         price = 0;
-
+        int n;
         do
         {
             cout << "\n**************************************************************" << endl;
@@ -516,7 +529,7 @@ public:
             }
             cout << "\n**************************************************************" << endl;
 
-            cout<< "\nEnter the item number that you want: ";
+            cout << "\nEnter the item number which you want: ";
             cin >> n;
 
             cout << "\nYou enter item is: " << itemArray[n - 1].getProductName() << endl;
@@ -533,6 +546,11 @@ public:
         } while (n != 0);
 
         cout << "\nTotal Price: " << price << "/=" << endl;
+
+        cout << "\nDo you want add this cart to order?" << endl;
+        cout << "1.Yes\t2.No" << endl;
+        cout << "\nEnter your option: " << endl;
+        cin >> n;
     }
 };
 
@@ -702,7 +720,7 @@ int main()
                     }
                     else if (n == 5)
                     {
-                        ShoppingCart sc(1);
+                        ShoppingCart sc(1, 1);
                         sc.addCard(numberOfItem);
                     }
 
