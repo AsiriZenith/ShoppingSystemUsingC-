@@ -10,17 +10,17 @@ private:
     string password;
 
 public:
-    void setuserName(string u)
+    void setuserName(string username)
     {
-        username = u;
+        this->username = username;
     }
     string getuserName()
     {
         return username;
     }
-    void setPassword(string s)
+    void setPassword(string password)
     {
-        password = s;
+        this->password = password;
     }
     bool login(string un, string pwd)
     {
@@ -56,41 +56,41 @@ public:
     {
         return customerId;
     }
-    void setCustomerName(string s)
+    void setCustomerName(string customerName)
     {
-        customerName = s;
+        this->customerName = customerName;
     }
     string getCustomerName()
     {
         return customerName;
     }
-    void setAddress(string a)
+    void setAddress(string address)
     {
-        address = a;
+        this->address = address;
     }
     string getAddress()
     {
         return address;
     }
-    void setEmail(string e)
+    void setEmail(string email)
     {
-        email = e;
+        this->email = email;
     }
     string getEmail()
     {
         return email;
     }
-    void setContactNo(string c)
+    void setContactNo(string contactNo)
     {
-        contactNo = c;
+        this->contactNo = contactNo;
     }
     string getContactNo()
     {
         return contactNo;
     }
-    void setGender(string g)
+    void setGender(string gender)
     {
-        gender = g;
+        this->gender = gender;
     }
     string getGender()
     {
@@ -112,9 +112,9 @@ public:
     // {
     //     return orderDeatils;
     // }
-    void Register(int id)
+    void Register(int customerId)
     {
-        customerId = id;
+        this->customerId = customerId;
         cout << "\nEnter Name: ";
         cin >> customerName;
         cout << "Enter UserName: ";
@@ -127,20 +127,46 @@ public:
         cin >> address;
         cout << "Enter Email: ";
         cin >> email;
-        cout << "Enter Contact Number: ";
-        cin >> _contactNo;
-        if (_contactNo.length() == 10)
+        do
         {
-            contactNo = _contactNo;
-            _contactNo = "";
-        }
-        else
+            cout << "Enter Contact Number: ";
+            cin >> _contactNo;
+            if (_contactNo.length() == 10)
+            {
+                contactNo = _contactNo;
+                _contactNo = "";
+                break;
+            }
+            else
+            {
+                contactNo = "";
+                cout << "Entered Contact Number is Not Valid!! Please Try Again!!" << endl;
+            }
+        } while (1);
+
+        do
         {
-            contactNo = "";
-            cout << "Entered Contact Number is Not Valid!!" << endl;
-        }
-        cout << "Enter Gender: ";
-        cin >> gender;
+            int n;
+            cout << "Enter Gender: ";
+            cout << "1.Male\t2.Femail" << endl;
+            cout << "Enter related number here:  ";
+            cin >> n;
+            if (n == 1)
+            {
+                gender = "male";
+                break;
+            }
+            else if (n == 2)
+            {
+                gender = "Femail";
+                break;
+            }
+            else
+            {
+                cout << "\nYour entered is invalid. Please enter Again!!" << endl;
+            }
+
+        } while (1);
     }
     void updateProfile()
     {
@@ -260,7 +286,7 @@ public:
         objArray[NumberOfCustomers].Register(NumberOfCustomers + 1);
         return ++NumberOfCustomers;
     }
-    void RemoveCustomer(int NumberOfCustomers) //this method not work correctly
+    int RemoveCustomer(int NumberOfCustomers)
     {
         int n, indexOf_n;
         cout << "************************************************" << endl;
@@ -277,6 +303,8 @@ public:
         }
         else if (NumberOfCustomers > 0)
         {
+            indexOf_n = -1;
+
             cout << "Enter the CustomerId which you want to Remove: ";
             cin >> n;
 
@@ -295,16 +323,19 @@ public:
             }
             if (indexOf_n != -1)
             {
+                cout << "*********************************************" << endl;
                 for (int i = indexOf_n; i < NumberOfCustomers; i++)
                 {
                     objArray[i] = objArray[i + 1];
                 }
+                NumberOfCustomers--;
             }
         }
         else
         {
             cout << "\nErorr!!" << endl;
         }
+        return NumberOfCustomers;
     }
 };
 
@@ -317,7 +348,7 @@ private:
     int price;
     int amount;
     int discount;
-    string details;
+    //string details;
 
 public:
     int getProductID()
@@ -452,6 +483,10 @@ public:
             cout << discount << endl;
         }
     }
+    void restocked()
+    {
+        //no implement yet
+    }
 };
 
 //Created Item Object Array as globally
@@ -469,10 +504,12 @@ private:
     //bool orderStatus;
 
 public:
-    Order() {}          //Declared Order type object array below this class. 
-        //default constructor should be include so that create the below object array 
+    Order() {} //Declared Order type object array below this class.
+    //default constructor should be include so that create the below object array
     Order(int _shoppingCartId)
     {
+        status = false;
+
         shoppingCartId = _shoppingCartId;
         time_t now = time(0);
         tm *ltm = localtime(&now);
@@ -510,10 +547,15 @@ private:
     int price;
 
 public:
+    ShoppingCart() {} //default constructor
     ShoppingCart(int _customerId, int _cartId)
     {
         customerId = _customerId;
         cartId = _cartId;
+    }
+    void PrintMethod()
+    {
+        cout << customerId << "\t" << cartId << endl;
     }
     void addCard(int numberOfItem)
     {
@@ -549,10 +591,16 @@ public:
 
         cout << "\nDo you want add this cart to order?" << endl;
         cout << "1.Yes\t2.No" << endl;
-        cout << "\nEnter your option: " << endl;
+        cout << "\nEnter your option: ";
         cin >> n;
+
+        if (n == 1)
+        {
+            cout << "Hello World!" << endl;
+        }
     }
 };
+ShoppingCart shoppingCartArray[20]; //this array start index is number 1
 
 int selectIndexOfItem(int numberOfItem)
 {
@@ -566,8 +614,22 @@ int selectIndexOfItem(int numberOfItem)
         cout << "\t" << itemArray[i].getProductID() << "\t    " << itemArray[i].getProductName() << endl;
     }
 
-    cout << "Enter the ProductID do you want to update or view: ";
-    cin >> indexOfselectItem;
+    do
+    {
+        cout << "Enter the ProductID do you want to update or view: ";
+        cin >> indexOfselectItem;
+
+        if (indexOfselectItem < numberOfItem)
+        {
+            break;
+        }
+        else
+        {
+            cout << "\nYour entered has some issues. Please Try Again!!" << endl;
+        }
+
+    } while (1);
+
     return indexOfselectItem;
 }
 
@@ -587,12 +649,13 @@ int main()
     int indexOfItem = 0;
     int numberOfItem = 0;
     int indexOfselectItem;
+    int numberOfShoppingCart = 1;
     do
     {
         cout << "\n1.Customer\t2.Administrator\t    3.Exit" << endl;
         cout << "Select Your Choice: ";
         cin >> n;
-        if (n != 3)
+        if (n != 3 && n < 3)
         {
             cout << "\nEnter Your Username: ";
             cin >> username;
@@ -621,7 +684,7 @@ int main()
             {
                 do
                 {
-                    cout << "\n1.Edit Customer Details\t  2.Add cart\t  3.LogOut" << endl;
+                    cout << "\n1.Edit Customer Details\t  2.Transactions\t  3.LogOut" << endl;
                     cout << "Enter Your choice: ";
                     cin >> n;
 
@@ -631,7 +694,39 @@ int main()
                     }
                     else if (n == 2)
                     {
-                        //not implement yet
+                        shoppingCartArray[numberOfShoppingCart] = ShoppingCart(objArray[indexOfCurrentCustomer].getCustomerId(), numberOfShoppingCart);
+                        shoppingCartArray[numberOfShoppingCart].PrintMethod();
+
+                        cout << "\n1.Add Cart\t  2.Delete Cart\t  3.Update Quantity\t   4.View Cart\t  5.View Item Details" << endl;
+                        cout << "Enter Your choice: ";
+                        cin >> n;
+
+                        if (n == 1)
+                        {
+                            shoppingCartArray[numberOfShoppingCart].addCard(numberOfItem);
+                        }
+                        else if (n == 2)
+                        {
+                            /* code */
+                        }
+                        else if (n == 3)
+                        {
+                            /* code */
+                        }
+                        else if (n == 4)
+                        {
+                            /* code */
+                        }
+                        else if (n == 5)
+                        {
+                            /* code */
+                        }
+                        else
+                        {
+                            cout << "\nYou entered is invalid.!!" << endl;
+                        }
+
+                        numberOfShoppingCart++;
                     }
                     else if (n == 3)
                     {
@@ -653,17 +748,18 @@ int main()
                 cout << "\nYour Login Succussfull!!" << endl;
                 do
                 {
-                    cout << "\n1.Add Customer\t  2.Remove Customer\t3.Item \t  4.LogOut\t5.AddCart" << endl;
+                    cout << "\n1.Add Customer\t   2.Remove Customer\t3.Item \t   4.LogOut\t5.AddCart" << endl;
                     cout << "Enter Your Option: ";
                     cin >> n;
                     if (n == 1)
                     {
                         NumberOfCustomers = admin.AddCustomer(NumberOfCustomers);
+                        cout << "*************************" << endl;
+                        cout << NumberOfCustomers << endl;
                     }
                     else if (n == 2)
                     {
-                        admin.RemoveCustomer(NumberOfCustomers);
-                        NumberOfCustomers--;
+                        NumberOfCustomers = admin.RemoveCustomer(NumberOfCustomers);
                     }
                     else if (n == 3)
                     {
