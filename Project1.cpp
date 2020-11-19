@@ -117,19 +117,19 @@ public:
         this->customerId = customerId;
         cout << "\nEnter Name: ";
         cin >> customerName;
-        cout << "Enter UserName: ";
+        cout << "\nEnter UserName: ";
         cin >> _userName;
         setuserName(_userName);
-        cout << "Enter Password: ";
+        cout << "\nEnter Password: ";
         cin >> _password1;
         setPassword(_password1);
-        cout << "Enter Addaress: ";
+        cout << "\nEnter Addaress: ";
         cin >> address;
-        cout << "Enter Email: ";
+        cout << "\nEnter Email: ";
         cin >> email;
         do
         {
-            cout << "Enter Contact Number: ";
+            cout << "\nEnter Contact Number: ";
             cin >> _contactNo;
             if (_contactNo.length() == 10)
             {
@@ -140,16 +140,15 @@ public:
             else
             {
                 contactNo = "";
-                cout << "Entered Contact Number is Not Valid!! Please Try Again!!" << endl;
+                cout << "\nEntered Contact Number is Not Valid!! Please Try Again!!" << endl;
             }
         } while (1);
 
         do
         {
             int n;
-            cout << "Enter Gender: ";
-            cout << "1.Male\t2.Femail" << endl;
-            cout << "Enter related number here:  ";
+            cout << "\nEnter Gender: 1.Male\t2.Femail";
+            cout << "\nEnter related number here:  ";
             cin >> n;
             if (n == 1)
             {
@@ -198,73 +197,94 @@ public:
         {
             cout << "\nEnter the New Name: ";
             cin >> customerName;
-            n == 11;
         }
         else if (n == 2)
         {
             cout << "\nEnter the New UserName: ";
             cin >> _userName;
             setuserName(_userName);
-            n == 12;
         }
         else if (n == 3)
         {
             cout << "\nEnter the New Address: ";
             cin >> address;
-            n == 13;
         }
         else if (n == 4)
         {
             cout << "\nEnter the new Email: ";
             cin >> email;
-            n == 14;
         }
         else if (n == 5)
         {
-            cout << "\nEnter the new Contact Number: ";
-            cin >> _contactNo;
-            if (_contactNo.length() == 10)
+            do
             {
-                contactNo = _contactNo;
-                _contactNo = "";
-                n = 15;
-            }
-            else
-            {
-                contactNo = "";
-                cout << "\nEntered Contact Number is Not Valid!!" << endl;
-            }
+                cout << "\nEnter the new Contact Number: ";
+                cin >> _contactNo;
+                if (_contactNo.length() == 10)
+                {
+                    contactNo = _contactNo;
+                    _contactNo = "";
+                    break;
+                }
+                else
+                {
+                    contactNo = "";
+                    cout << "\nEntered Contact Number is Not Valid!!" << endl;
+                }
+            } while (1);
         }
         else if (n == 6)
         {
-            cout << "\nEnter gender: ";
-            cin >> gender;
-            n = 16;
+            do
+            {
+                cout << "\nGender: 1.Male\t2.Femail" << endl;
+                cout << "Enter related number here: " << endl;
+                cin >> n;
+
+                if (n == 1)
+                {
+                    gender = "Male";
+                    break;
+                }
+                else if (n == 2)
+                {
+                    gender = "Femail";
+                    break;
+                }
+                else
+                {
+                    cout << "\nYour entered is Invalid!! Please Try Again!!" << endl;
+                }
+            } while (1);
         }
         else if (n == 7)
         {
-            cout << "\nEnter the new password: ";
-            cin >> _password1;
-            cout << "Enter the password again: ";
-            cin >> _password2;
-            if (_password1 == _password2)
+            do
             {
-                setPassword(_password1);
-                cout << "\nPassword Change Updated!!" << endl;
-                _password1 = "";
-                _password2 = "";
-            }
-            else
-            {
-                cout << "\nYour entered is Not Match. Try Again!!" << endl;
-            }
+                cout << "\nEnter the new password: ";
+                cin >> _password1;
+                cout << "Enter the password again: ";
+                cin >> _password2;
+                if (_password1 == _password2)
+                {
+                    setPassword(_password1);
+                    cout << "\nPassword Change Updated!!" << endl;
+                    _password1 = "";
+                    _password2 = "";
+                    break;
+                }
+                else
+                {
+                    cout << "\nYour entered is Not Match. Try Again!!" << endl;
+                }
+            } while (1);
         }
         else
         {
-            cout << "Your Entered is Invalid!!" << endl;
+            cout << "Your Entered is Invalid!! Please Try Again!!" << endl;
             n = 20;
         }
-        if (n > 10)
+        if (n < 10)
         {
             cout << "\nYour Update is Successfull!!" << endl;
         }
@@ -329,6 +349,7 @@ public:
                     objArray[i] = objArray[i + 1];
                 }
                 NumberOfCustomers--;
+                cout << "\nCustomer Removed!!" << endl;
             }
         }
         else
@@ -378,7 +399,7 @@ public:
     void addItem(int numberOfItem)
     {
         int n;
-        productID = numberOfItem;
+        productID = numberOfItem; //first item productId is 1
         cout << "\nEnter Product Name: ";
         cin >> productName;
         cout << "Enter Description: ";
@@ -458,9 +479,9 @@ public:
         else
         {
             cout << "\nYour Entered is Invalid!!" << endl;
-            n = 5;
+            n = -1;
         }
-        if (n != 5)
+        if (n != -1)
         {
             cout << "\nYour Update is Successfull!!" << endl;
         }
@@ -485,10 +506,9 @@ public:
     }
     void restocked()
     {
-        //no implement yet
+        //nothing implement yet
     }
 };
-
 //Created Item Object Array as globally
 Item itemArray[20];
 
@@ -506,13 +526,17 @@ private:
 public:
     Order() {} //Declared Order type object array below this class.
     //default constructor should be include so that create the below object array
-    Order(int _shoppingCartId)
+    Order(int shoppingCartId)
     {
         status = false;
 
-        shoppingCartId = _shoppingCartId;
-        time_t now = time(0);
-        tm *ltm = localtime(&now);
+        this->shoppingCartId = shoppingCartId;
+        // time_t now = time(0);
+        // tm *ltm = localtime(&now);
+    }
+    int getShoppingCartId()
+    {
+        return shoppingCartId;
     }
     bool checkStatus()
     {
@@ -542,24 +566,41 @@ class ShoppingCart
 private:
     int cartId;
     int customerId;
-    int productId;
-    int quantity;
-    int price;
+    int productId[10];
+    int quantity[10];
+    int priceOfitem[10];
+    int numberOfItemsInCart = 0;
+    int totalPrice = 0;
+    int _quantity;
 
 public:
     ShoppingCart() {} //default constructor
-    ShoppingCart(int _customerId, int _cartId)
+    ShoppingCart(int customerId, int cartId)
     {
-        customerId = _customerId;
-        cartId = _cartId;
+        this->customerId = customerId;
+        this->cartId = cartId;
+    }
+    int getCustomerId()
+    {
+        return customerId;
     }
     void PrintMethod()
     {
-        cout << customerId << "\t" << cartId << endl;
+        cout << "\n****************************************" << endl;
+        cout << "\tCustomer ID: " << customerId << endl;
+        cout << "\tCart ID: " << cartId << endl;
+        for (int i = 0; i < numberOfItemsInCart; i++)
+        {
+            cout << "\n\tProduct ID: " << productId[i] << endl;
+            cout << "\tQuantity: " << quantity[i] << endl;
+            cout << "\tPrice: " << priceOfitem[i] << endl;
+        }
+        cout << "\n\tTotal Price: " << totalPrice << endl;
+        cout << "\n****************************************" << endl;
     }
-    void addCard(int numberOfItem)
+    int addCard(int numberOfItem, int numberOfOrder)
     {
-        price = 0;
+        totalPrice = 0;
         int n;
         do
         {
@@ -573,21 +614,27 @@ public:
 
             cout << "\nEnter the item number which you want: ";
             cin >> n;
+            productId[numberOfItemsInCart] = n;
 
             cout << "\nYou enter item is: " << itemArray[n - 1].getProductName() << endl;
+            cout << "Price: " << itemArray[n - 1].getProductPrice() << endl;
 
             cout << "\nEnter the Item amount: ";
-            cin >> quantity;
+            cin >> _quantity;
 
-            price = price + quantity * itemArray[n - 1].getProductPrice();
+            quantity[numberOfItemsInCart] = _quantity;
 
-            cout << "\nPrice: " << quantity * itemArray[n - 1].getProductPrice() << "/=" << endl;
+            priceOfitem[numberOfItemsInCart] = quantity[numberOfItemsInCart] * itemArray[n - 1].getProductPrice();
+
+            totalPrice = totalPrice + priceOfitem[numberOfItemsInCart];
+
+            cout << "\nPrice: " << priceOfitem[numberOfItemsInCart] << "/=" << endl;
             cout << "\nIf you want to continue, press any number otherwise you want to exit press '0' : ";
             cin >> n;
-
+            numberOfItemsInCart++;
         } while (n != 0);
 
-        cout << "\nTotal Price: " << price << "/=" << endl;
+        cout << "\nTotal Price: " << totalPrice << "/=" << endl;
 
         cout << "\nDo you want add this cart to order?" << endl;
         cout << "1.Yes\t2.No" << endl;
@@ -596,8 +643,11 @@ public:
 
         if (n == 1)
         {
-            cout << "Hello World!" << endl;
+            orderArray[numberOfOrder] = Order(cartId);
+            numberOfOrder++;
+            cout << "\nCart Added Successfull.!!" << endl;
         }
+        return numberOfOrder;
     }
 };
 ShoppingCart shoppingCartArray[20]; //this array start index is number 1
@@ -607,17 +657,19 @@ int selectIndexOfItem(int numberOfItem)
     int indexOfselectItem;
     cout << "\n************************************************" << endl;
     cout << "NumberOfItems: " << numberOfItem << endl;
-    cout << "\n Item ID\t Item Name" << endl;
+    cout << "\n\t Product ID\t Product Name" << endl;
 
     for (int i = 0; i < numberOfItem; i++)
     {
-        cout << "\t" << itemArray[i].getProductID() << "\t    " << itemArray[i].getProductName() << endl;
+        cout << "\t\t" << itemArray[i].getProductID() << "\t    " << itemArray[i].getProductName() << endl;
     }
 
     do
     {
-        cout << "Enter the ProductID do you want to update or view: ";
+        cout << "\nEnter the ProductID do you want to update or view: ";
         cin >> indexOfselectItem;
+
+        indexOfselectItem--;
 
         if (indexOfselectItem < numberOfItem)
         {
@@ -631,6 +683,14 @@ int selectIndexOfItem(int numberOfItem)
     } while (1);
 
     return indexOfselectItem;
+}
+
+void printOrder(int indexOfOrder)
+{
+    int cartId = orderArray[indexOfOrder].getShoppingCartId();
+    int customerId = shoppingCartArray[cartId - 1].getCustomerId();
+    cout << "\nCustomer Name: " << objArray[customerId - 1].getCustomerName() << endl;
+    shoppingCartArray[cartId - 1].PrintMethod();
 }
 
 int main()
@@ -650,9 +710,10 @@ int main()
     int numberOfItem = 0;
     int indexOfselectItem;
     int numberOfShoppingCart = 1;
+    int numberOfOrder = 0;
     do
     {
-        cout << "\n1.Customer\t2.Administrator\t    3.Exit" << endl;
+        cout << "\n1.Customer     \t2.Administrator\t   3.Exit" << endl;
         cout << "Select Your Choice: ";
         cin >> n;
         if (n != 3 && n < 3)
@@ -684,7 +745,7 @@ int main()
             {
                 do
                 {
-                    cout << "\n1.Edit Customer Details\t  2.Transactions\t  3.LogOut" << endl;
+                    cout << "\n1.Edit Customer Details\t   2.Transactions\t 3.LogOut" << endl;
                     cout << "Enter Your choice: ";
                     cin >> n;
 
@@ -694,8 +755,7 @@ int main()
                     }
                     else if (n == 2)
                     {
-                        shoppingCartArray[numberOfShoppingCart] = ShoppingCart(objArray[indexOfCurrentCustomer].getCustomerId(), numberOfShoppingCart);
-                        shoppingCartArray[numberOfShoppingCart].PrintMethod();
+                        shoppingCartArray[numberOfShoppingCart - 1] = ShoppingCart(objArray[indexOfCurrentCustomer].getCustomerId(), numberOfShoppingCart);
 
                         cout << "\n1.Add Cart\t  2.Delete Cart\t  3.Update Quantity\t   4.View Cart\t  5.View Item Details" << endl;
                         cout << "Enter Your choice: ";
@@ -703,7 +763,15 @@ int main()
 
                         if (n == 1)
                         {
-                            shoppingCartArray[numberOfShoppingCart].addCard(numberOfItem);
+                            if (numberOfItem == 0)
+                            {
+                                cout << "\nNothing Any Item Yet" << endl;
+                                cout << numberOfItem << endl;
+                            }
+                            else
+                            {
+                                numberOfOrder = shoppingCartArray[numberOfShoppingCart - 1].addCard(numberOfItem, numberOfOrder);
+                            }
                         }
                         else if (n == 2)
                         {
@@ -748,14 +816,13 @@ int main()
                 cout << "\nYour Login Succussfull!!" << endl;
                 do
                 {
-                    cout << "\n1.Add Customer\t   2.Remove Customer\t3.Item \t   4.LogOut\t5.AddCart" << endl;
+                    cout << "\n1.Add Customer\t   2.Remove Customer\t3.Item \t   4.LogOut\t5.AddCart\t6.View Order" << endl;
                     cout << "Enter Your Option: ";
                     cin >> n;
                     if (n == 1)
                     {
                         NumberOfCustomers = admin.AddCustomer(NumberOfCustomers);
-                        cout << "*************************" << endl;
-                        cout << NumberOfCustomers << endl;
+                        cout << "\nItem Added Successefull!!" << endl;
                     }
                     else if (n == 2)
                     {
@@ -770,8 +837,8 @@ int main()
                             cin >> n;
                             if (n == 1)
                             {
-                                itemArray[indexOfItem].addItem(indexOfItem + 1);
-                                indexOfItem++;
+                                itemArray[indexOfItem].addItem(indexOfItem + 1); //indexOfitem and numberOfitem are
+                                indexOfItem++;                                   // By default zero
                                 numberOfItem = indexOfItem;
                             }
                             else if (n == 2)
@@ -782,7 +849,6 @@ int main()
                                 }
                                 else
                                 {
-
                                     indexOfselectItem = selectIndexOfItem(numberOfItem);
                                     itemArray[indexOfselectItem].updateItem();
                                 }
@@ -795,7 +861,6 @@ int main()
                                 }
                                 else
                                 {
-
                                     indexOfselectItem = selectIndexOfItem(numberOfItem);
                                     itemArray[indexOfselectItem].viewProducts();
                                 }
@@ -816,13 +881,36 @@ int main()
                     }
                     else if (n == 5)
                     {
-                        ShoppingCart sc(1, 1);
-                        sc.addCard(numberOfItem);
+                        // ShoppingCart sc(1, 1);
+                        // sc.addCard(numberOfItem);
                     }
-
+                    else if (n == 6)
+                    {
+                        cout << "\n**************************************************" << endl;
+                        cout << "Number Of Order: " << numberOfOrder << endl;
+                        cout << "*************** Order Details *****************" << endl;
+                        cout << "\n1.View 1st Order\t2.View all Order\t3.Exit" << endl;
+                        cout << "Enter your option: ";
+                        cin >> n;
+                        if (n == 1)
+                        {
+                            printOrder(0);
+                        }
+                        else if (n == 2)
+                        {
+                            for (int i = 0; i < numberOfOrder; i++)
+                            {
+                                printOrder(i);
+                            }
+                        }
+                        else if (n == 3)
+                        {
+                            break;
+                        }
+                    }
                     else
                     {
-                        cout << "Your Entered is Incorrect.!!" << endl;
+                        cout << "\nYour Entered is Incorrect.!!" << endl;
                     }
                 } while (1);
             }
@@ -840,4 +928,6 @@ int main()
             cout << "\nYour Entered is Incorrect.!!" << endl;
         }
     } while (1);
+
+    return 0;
 }
